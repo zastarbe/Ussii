@@ -1,0 +1,11 @@
+Options -Indexes
+RewriteEngine On
+
+# Bloquea carpetas internas; los PDF se sirven por la ruta controlada /files/...
+RewriteRule ^(data|pdfs|views)(/|$) - [F,L,NC]
+
+# Los archivos reales (assets) se sirven directamente; el resto pasa por el router PHP.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^ index.php [QSA,L]
